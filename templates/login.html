@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Stock Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; height: 100vh;
+            background: url("{{ url_for('static', filename='images/bull-bear.png') }}") no-repeat center center fixed;
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center;
+            position: relative;
+        }
+        body::before {
+            content: ""; position: absolute; inset: 0;
+            background: rgba(0,0,0,0.55); z-index: 0;
+        }
+        .login-box {
+            background: rgba(255,255,255,0.1);
+            padding: 40px; border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center; width: 320px; z-index: 1;
+            color: white;
+        }
+        .login-box h2 { margin-bottom: 20px; font-size: 26px; }
+        .login-box input {
+            width: 85%; padding: 10px; margin: 10px 0;
+            border-radius: 8px; border: none; outline: none;
+        }
+        .login-box button {
+            width: 92%; padding: 12px;
+            border: none; border-radius: 8px;
+            background: #27ae60; color: white; font-size: 16px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .login-box button:hover { background: #2ecc71; transform: scale(1.05); }
+        .error { color: #ff6b6b; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔐 Stock Predictor Login</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Enter Username" required><br>
+            <input type="password" name="password" placeholder="Enter Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    </div>
+</body>
+</html>

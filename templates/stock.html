@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ ticker }} Stock</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0; padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: #fff;
+        }
+        h2 { text-align: center; }
+        .container {
+            max-width: 900px; margin: auto;
+            background: rgba(255,255,255,0.12);
+            padding: 20px; border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+        img { display: block; margin: auto; max-width: 100%; }
+        form { text-align: center; margin: 20px 0; }
+        input[type="date"] {
+            padding: 8px; border-radius: 5px; border: none; margin-right: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background: #1abc9c; border: none;
+            color: white; border-radius: 8px; cursor: pointer;
+        }
+        button:hover { background: #16a085; }
+        .back-link {
+            display: inline-block; margin-top: 15px;
+            text-decoration: none; color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>{{ ticker }} Stock Analysis</h2>
+
+        {% if current_price is not none %}
+            <p><b>Current Price:</b> {{ current_price }}</p>
+        {% endif %}
+
+        {% if chart_img %}
+            <h3>📈 Last 1 Year Actual Price</h3>
+            <img src="data:image/png;base64,{{ chart_img }}">
+        {% endif %}
+
+        <form method="POST">
+            <label><b>Enter Future Date:</b></label>
+            <input type="date" name="future_date" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if future_price %}
+            <p><b>Predicted Price on <br> date {{ request.form['future_date'] }}:</b> {{ future_price }}</p>
+        {% endif %}
+
+        {% if accuracy %}
+            <p><b>Model Accuracy:</b> <br>{{ accuracy }}</p>
+        {% endif %}
+
+        {% if prediction_img %}
+            <h3>📊 Actual vs Prediction with Moving Averages</h3>
+            <img src="data:image/png;base64,{{ prediction_img }}">
+        {% endif %}
+
+        <a href="{{ url_for('dashboard') }}" class="back-link">⬅ Back to Dashboard</a>
+    </div>
+</body>
+</html>
